@@ -57,6 +57,24 @@ namespace negocio
             }
         }
 
+        //PARA EL TRAINEE
+        public int ejecutarAccionScalar()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                return int.Parse(comando.ExecuteScalar().ToString());
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
         public void setearParametro(string nombre, object valor)
         {
             comando.Parameters.AddWithValue(nombre, valor);
@@ -67,6 +85,12 @@ namespace negocio
             if (lector != null)
                 lector.Close();
             conexion.Close();
+        }
+
+        public void setearProcedimiento(string sp)
+        {
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = sp;
         }
 
     }
